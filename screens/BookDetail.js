@@ -56,7 +56,7 @@ const BookDetail = ({ route, navigation }) => {
             left: 0,
             backgroundColor: book.backgroundColor,
           }}
-        ></View>
+        />
 
         {/* Navigation header */}
         <View
@@ -255,7 +255,8 @@ const BookDetail = ({ route, navigation }) => {
             alignItems: "center",
             justifyContent: "center",
           }}
-          onPress={() => console.log("Start Reading")}
+          // onPress={() => console.log(book.id)}
+          onPress={() => navigation.navigate("Reading", { book })}
         >
           <Text style={{ ...FONTS.h3, color: COLORS.white }}>Start Reading</Text>
         </TouchableOpacity>

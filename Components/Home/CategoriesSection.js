@@ -13,9 +13,15 @@ import {
 import { COLORS, FONTS, SIZES, icons, images } from "../../constants";
 import { profileData, myBooksData, categoriesData } from "../../constants/data";
 
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+const DetailStack = createNativeStackNavigator();
+
 const CategoriesSection = ({ navigation }) => {
-  const [profile, setProfile] = React.useState(profileData);
-  const [myBooks, setMyBooks] = React.useState(myBooksData);
+  // const [profile, setProfile] = React.useState(profileData);
+  // const [myBooks, setMyBooks] = React.useState(myBooksData);
   const [categories, setCategories] = React.useState(categoriesData);
   const [selectedCategory, setSelectedCategory] = React.useState(1);
 
