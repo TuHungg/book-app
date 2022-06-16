@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home } from "../screens/";
 import { icons, COLORS } from "../constants";
 import Reading from "../screens/Reading";
+import { AntDesign } from '@expo/vector-icons'; 
 
 const Tab = createBottomTabNavigator();
 
@@ -28,15 +29,16 @@ const Tabs = () => {
           switch (route.name) {
             case "Home":
               return (
-                <Image
-                  source={icons.dashboard_icon}
-                  resizeMode="contain"
-                  style={{
-                    tintColor: tintColor,
-                    width: 25,
-                    height: 25,
-                  }}
-                />
+                // <Image
+                //   source={icons.dashboard_icon}
+                //   resizeMode="contain"
+                //   style={{
+                //     tintColor: tintColor,
+                //     width: 25,
+                //     height: 25,
+                //   }}
+                // />
+                <AntDesign name="home" size={28} color={tintColor} />
               );
 
             case "Search":

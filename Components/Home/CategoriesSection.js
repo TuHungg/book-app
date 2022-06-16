@@ -12,18 +12,37 @@ import {
 
 import { COLORS, FONTS, SIZES, icons, images } from "../../constants";
 import { profileData, myBooksData, categoriesData } from "../../constants/data";
+import { Feather } from "@expo/vector-icons";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-const DetailStack = createNativeStackNavigator();
+import { apiGetBook } from "../../firebase/api/apiBook";
+// import { postBook } from "../../firebase/cofigFirbase";
 
 const CategoriesSection = ({ navigation }) => {
-  // const [profile, setProfile] = React.useState(profileData);
-  // const [myBooks, setMyBooks] = React.useState(myBooksData);
   const [categories, setCategories] = React.useState(categoriesData);
   const [selectedCategory, setSelectedCategory] = React.useState(1);
+
+  const [dataApp, setDataApp] = React.useState();
+
+  React.useEffect(() => {
+    console.log("render ", new Date().toLocaleString());
+
+    const db = async () => {
+      const value = await apiGetBook();
+      // console.log(value);
+      setDataApp(value);
+    };
+    db();
+  }, []);
+
+  React.useEffect(() => {
+    dataApp.map((data) => {
+      console.log(data.value.name);
+    });
+  }, []);
 
   function renderCategoryHeader() {
     const renderItem = ({ item }) => {
@@ -112,13 +131,12 @@ const CategoriesSection = ({ navigation }) => {
                   {item.pageNo}
                 </Text>
 
-                <Image
-                  source={icons.read_icon}
+                <Feather
+                  name="eye"
                   resizeMode="contain"
+                  size={20}
                   style={{
-                    width: 20,
-                    height: 20,
-                    tintColor: COLORS.lightBlue,
+                    color: COLORS.lightBlue,
                   }}
                 />
                 <Text

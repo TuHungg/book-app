@@ -7,12 +7,21 @@ import {
   Image,
   ScrollView,
   Animated,
+  useWindowDimensions,
 } from "react-native";
+import ReadPdf from "../Components/shared/ReadPdf";
 
 import { COLORS, FONTS, SIZES, icons, images } from "../constants";
 
+// const source = {
+//   uri: "../constants/thuvienpdf.comnha-gia-kim.pdf",
+//   cache: true,
+// };
+
 const Reading = ({ route, navigation }) => {
   const [book, setBook] = React.useState(null);
+
+  const { width, height } = useWindowDimensions();
 
   const [scrollViewWholeHeight, setScrollViewWholeHeight] = React.useState(1);
   const [scrollViewVisibleHeight, setScrollViewVisibleHeight] = React.useState(0);
@@ -23,10 +32,6 @@ const Reading = ({ route, navigation }) => {
     let { book } = route.params;
     setBook(book);
   }, [book]);
-
-  // const myArray = new Array();
-  // console.log(book.description);
-  // console.log(myArray.push(book?.description));
 
   const renderBook = () => {
     return (
@@ -125,6 +130,8 @@ const Reading = ({ route, navigation }) => {
                   {book?.bookName}
                 </Text>
               </View>
+              {/* <ReadPdf source={"../constants/thuvienpdf.comnha-gia-kim.pdf"} /> */}
+
               <Text style={{ ...FONTS.body3, color: COLORS.lightGray }}>{book?.description}</Text>
             </ScrollView>
           </View>

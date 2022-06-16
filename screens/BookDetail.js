@@ -9,6 +9,7 @@ import {
   Animated,
 } from "react-native";
 import { FONTS, COLORS, SIZES, icons } from "../constants";
+import * as Animatable from "react-native-animatable";
 
 const LineDivider = () => {
   return (
@@ -266,7 +267,12 @@ const BookDetail = ({ route, navigation }) => {
 
   if (book) {
     return (
-      <View style={{ flex: 1, backgroundColor: COLORS.darkBlue }}>
+      <Animatable.View
+        style={{ flex: 1, backgroundColor: COLORS.darkBlue }}
+        animation="fadeInDown"
+        duration={2000}
+        delay={1000}
+      >
         {/* Book Cover Section */}
         <View style={{ flex: 4 }}>{renderBookInfoSection()}</View>
 
@@ -275,7 +281,7 @@ const BookDetail = ({ route, navigation }) => {
 
         {/* Buttons */}
         <View style={{ height: 70, marginBottom: 30 }}>{renderBottomButton()}</View>
-      </View>
+      </Animatable.View>
     );
   } else {
     return <></>;
