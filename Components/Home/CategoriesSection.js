@@ -19,69 +19,68 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { apiGetBook } from "../../firebase/api/apiBook";
-// import { postBook } from "../../firebase/cofigFirbase";
+import { apiGetImage } from "./../../firebase/api/apiBook";
 
 const CategoriesSection = ({ navigation }) => {
   const [categories, setCategories] = React.useState(categoriesData);
   const [selectedCategory, setSelectedCategory] = React.useState(1);
 
   const [dataApp, setDataApp] = React.useState();
+  const [imageApp, setImageApp] = React.useState();
 
   React.useEffect(() => {
-    console.log("render ", new Date().toLocaleString());
+    // console.log("render ", new Date().toLocaleString());
 
     const db = async () => {
-      const value = await apiGetBook();
-      // console.log(value);
-      setDataApp(value);
+      const image = await apiGetImage();
+      const data = await apiGetBook();
+      // console.log(data);
+      setDataApp(data);
+      setImageApp(image);
     };
     db();
   }, []);
 
-  React.useEffect(() => {
-    dataApp.map((data) => {
-      console.log(data.value.name);
-    });
-  }, []);
+  // console.log(imageApp);
 
-  function renderCategoryHeader() {
-    const renderItem = ({ item }) => {
-      return (
-        <TouchableOpacity
-          style={{ flex: 1, marginRight: SIZES.padding }}
-          onPress={() => setSelectedCategory(item.id)}
-        >
-          {selectedCategory == item.id && (
-            <Text style={{ ...FONTS.h2, color: COLORS.lightOrange2 }}>{item.categoryName}</Text>
-          )}
-          {selectedCategory != item.id && (
-            <Text style={{ ...FONTS.h2, color: COLORS.lightBlue }}>{item.categoryName}</Text>
-          )}
-        </TouchableOpacity>
-      );
-    };
+  // function renderCategoryHeader() {
+  //   const renderItem = ({ item }) => {
+  //     return (
+  //       <TouchableOpacity
+  //         style={{ flex: 1, marginRight: SIZES.padding }}
+  //         onPress={() => setSelectedCategory(item.id)}
+  //       >
+  //         {selectedCategory == item.id && (
+  //           <Text style={{ ...FONTS.h2, color: COLORS.lightOrange2 }}>{item.categoryName}</Text>
+  //         )}
+  //         {selectedCategory != item.id && (
+  //           <Text style={{ ...FONTS.h2, color: COLORS.lightBlue }}>{item.categoryName}</Text>
+  //         )}
+  //       </TouchableOpacity>
+  //     );
+  //   };
 
-    return (
-      <View style={{ flex: 1, paddingLeft: SIZES.padding }}>
-        <FlatList
-          data={categories}
-          showsHorizontalScrollIndicator={false}
-          renderItem={renderItem}
-          keyExtractor={(item) => `${item.id}`}
-          horizontal
-        />
-      </View>
-    );
-  }
+  //   return (
+  //     <View style={{ flex: 1, paddingLeft: SIZES.padding }}>
+  //       <FlatList
+  //         data={categories}
+  //         showsHorizontalScrollIndicator={false}
+  //         renderItem={renderItem}
+  //         keyExtractor={(item) => `${item.id}`}
+  //         horizontal
+  //       />
+  //     </View>
+  //   );
+  // }
 
   function renderCategoryData() {
-    var books = [];
+    // var books = [];
 
-    let selectedCategoryBooks = categories.filter((a) => a.id == selectedCategory);
+    // let selectedCategoryBooks = categories.filter((a) => a.id == selectedCategory);
 
-    if (selectedCategoryBooks.length > 0) {
-      books = selectedCategoryBooks[0].books;
-    }
+    // if (selectedCategoryBooks.length > 0) {
+    //   books = selectedCategoryBooks[0].books;
+    // }
 
     const renderItem = ({ item }) => {
       return (
@@ -90,13 +89,13 @@ const CategoriesSection = ({ navigation }) => {
             style={{ flex: 1, flexDirection: "row" }}
             onPress={() =>
               navigation.navigate("BookDetail", {
-                book: item,
+                book: item.value,
               })
             }
           >
             {/* Book Cover */}
             <Image
-              source={item.bookCover}
+              source={images.theTinyDragon}
               resizeMode="cover"
               style={{ width: 100, height: 150, borderRadius: 10 }}
             />
@@ -105,9 +104,9 @@ const CategoriesSection = ({ navigation }) => {
               {/* Book name and author */}
               <View>
                 <Text style={{ paddingRight: SIZES.padding, ...FONTS.h3, color: COLORS.black }}>
-                  {item.bookName}
+                  {item.value.name}
                 </Text>
-                <Text style={{ ...FONTS.h3, color: COLORS.lightBlue }}>{item.author}</Text>
+                <Text style={{ ...FONTS.h3, color: COLORS.lightBlue }}>{item.value.author}</Text>
               </View>
 
               {/* Book Info */}
@@ -128,7 +127,7 @@ const CategoriesSection = ({ navigation }) => {
                     paddingHorizontal: SIZES.radius,
                   }}
                 >
-                  {item.pageNo}
+                  {item.value.page}
                 </Text>
 
                 <Feather
@@ -139,7 +138,7 @@ const CategoriesSection = ({ navigation }) => {
                     color: COLORS.lightBlue,
                   }}
                 />
-                <Text
+                {/* <Text
                   style={{
                     ...FONTS.body4,
                     color: COLORS.lightBlue,
@@ -147,11 +146,11 @@ const CategoriesSection = ({ navigation }) => {
                   }}
                 >
                   {item.readed}
-                </Text>
+                </Text> */}
               </View>
 
               {/* Genre */}
-              <View style={{ flexDirection: "row", marginTop: SIZES.base }}>
+              {/* <View style={{ flexDirection: "row", marginTop: SIZES.base }}>
                 {item.genre.includes("Adventure") && (
                   <View
                     style={{
@@ -197,7 +196,7 @@ const CategoriesSection = ({ navigation }) => {
                     <Text style={{ ...FONTS.h5, color: COLORS.lightOrange2 }}>#Drama</Text>
                   </View>
                 )}
-              </View>
+              </View> */}
             </View>
           </TouchableOpacity>
 
@@ -223,7 +222,7 @@ const CategoriesSection = ({ navigation }) => {
     return (
       <View style={{ flex: 1, marginTop: SIZES.radius, paddingLeft: SIZES.padding }}>
         <FlatList
-          data={books}
+          data={dataApp}
           renderItem={renderItem}
           keyExtractor={(item) => `${item.id}`}
           showsVerticalScrollIndicator={false}
@@ -234,7 +233,7 @@ const CategoriesSection = ({ navigation }) => {
 
   return (
     <View style={{ marginTop: SIZES.padding }}>
-      <View>{renderCategoryHeader()}</View>
+      {/* <View>{renderCategoryHeader()}</View> */}
       <View>{renderCategoryData()}</View>
     </View>
   );

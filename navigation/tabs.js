@@ -1,12 +1,13 @@
 import React from "react";
 import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home } from "../screens/";
+import { Home, Profile } from "../screens/";
 import { icons, COLORS } from "../constants";
-import Reading from "../screens/Reading";
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from "@expo/vector-icons";
+// import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Tab = createBottomTabNavigator();
+// const Drawer = createDrawerNavigator();
 
 const tabOptions = {
   showLabel: false,
@@ -38,7 +39,7 @@ const Tabs = () => {
                 //     height: 25,
                 //   }}
                 // />
-                <AntDesign name="home" size={28} color={tintColor} />
+                <AntDesign name="home" resizeMode="contain" size={28} color={tintColor} />
               );
 
             case "Search":
@@ -67,17 +68,18 @@ const Tabs = () => {
                 />
               );
 
-            case "Setting":
+            case "Profile":
               return (
-                <Image
-                  source={icons.menu_icon}
-                  resizeMode="contain"
-                  style={{
-                    tintColor: tintColor,
-                    width: 25,
-                    height: 25,
-                  }}
-                />
+                // <Image
+                //   source={icons.Profile_icon}
+                //   resizeMode="contain"
+                //   style={{
+                //     tintColor: tintColor,
+                //     width: 25,
+                //     height: 25,
+                //   }}
+                // />
+                <AntDesign name="user" resizeMode="contain" size={28} color={tintColor} />
               );
           }
         },
@@ -86,7 +88,7 @@ const Tabs = () => {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={Home} />
       <Tab.Screen name="Notification" component={Home} />
-      <Tab.Screen name="Setting" component={Home} />
+      <Tab.Screen name="Profile" component={Profile} />
       {/* <Tab.Screen name="reading" component={Reading} /> */}
     </Tab.Navigator>
   );

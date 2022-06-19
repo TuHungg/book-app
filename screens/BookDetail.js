@@ -32,6 +32,8 @@ const BookDetail = ({ route, navigation }) => {
     setBook(book);
   }, [book]);
 
+  // console.log(book?.author);
+
   function renderBookInfoSection() {
     return (
       <View style={{ flex: 1 }}>
@@ -116,7 +118,7 @@ const BookDetail = ({ route, navigation }) => {
 
         {/* Book Name and Author */}
         <View style={{ flex: 1.8, alignItems: "center", justifyContent: "center" }}>
-          <Text style={{ ...FONTS.h2, color: book.navTintColor }}>{book.bookName}</Text>
+          <Text style={{ ...FONTS.h2, color: book.navTintColor }}>{book.name}</Text>
           <Text style={{ ...FONTS.body3, color: book.navTintColor }}>{book.author}</Text>
         </View>
 
@@ -132,24 +134,24 @@ const BookDetail = ({ route, navigation }) => {
         >
           {/* Rating */}
           <View style={{ flex: 1, alignItems: "center" }}>
-            <Text style={{ ...FONTS.h3, color: COLORS.white }}>{book.rating}</Text>
             <Text style={{ ...FONTS.body4, color: COLORS.white }}>Rating</Text>
+            <Text style={{ ...FONTS.h3, color: COLORS.white }}>{book.rating}</Text>
           </View>
 
           <LineDivider />
 
           {/* Pages */}
           <View style={{ flex: 1, paddingHorizontal: SIZES.radius, alignItems: "center" }}>
-            <Text style={{ ...FONTS.h3, color: COLORS.white }}>{book.pageNo}</Text>
-            <Text style={{ ...FONTS.body4, color: COLORS.white }}>Number of Page</Text>
+            <Text style={{ ...FONTS.body4, color: COLORS.white }}>Pages</Text>
+            <Text style={{ ...FONTS.h3, color: COLORS.white }}>{book.page}</Text>
           </View>
 
           <LineDivider />
 
           {/* Language */}
           <View style={{ flex: 1, alignItems: "center" }}>
-            <Text style={{ ...FONTS.h3, color: COLORS.white }}>{book.language}</Text>
             <Text style={{ ...FONTS.body4, color: COLORS.white }}>Language</Text>
+            <Text style={{ ...FONTS.h3, color: COLORS.white }}>{book.language}</Text>
           </View>
         </View>
       </View>

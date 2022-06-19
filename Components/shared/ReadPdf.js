@@ -14,6 +14,7 @@ const ReadPdf = (props) => {
 
   function ExtractText() {
     var input = document.getElementById("file-id");
+
     var fReader = new FileReader();
     fReader.readAsDataURL(input.files[0]);
     // console.log(input.files[0]);
