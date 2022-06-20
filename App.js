@@ -12,21 +12,17 @@ import { FONTS, COLORS, SIZES, icons } from "./constants";
 import { AuthContext } from "./store/Context";
 import { loginReducer, initiaLoginState } from "./store/Reducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuthentication } from "./hook/useAuthentication";
 
 const Stack = createStackNavigator();
 // const Drawer = createDrawerNavigator();
 
 const App = () => {
-  // const [isLoading, setIsLoading] = React.useState(true);
-  // const [userToken, setuseToken] = React.useState(null);
-
   useEffect(() => {
     setTimeout(async () => {
-      // setIsLoading(false);
       let userToken;
       userToken = null;
       try {
-        //userToken = (Math.random() + 1).toString(36).substring(7);
         userToken = await AsyncStorage.getItem("userToken");
       } catch (error) {
         console.log(error);
@@ -37,14 +33,15 @@ const App = () => {
 
   const [loginState, dispatch] = React.useReducer(loginReducer, initiaLoginState);
 
+  const { user } = useAuthentication();
+
   const authContext = React.useMemo(
     () => ({
       signIn: async (userName, password) => {
-        // setuseToken("abcd"), setIsLoading(false);
         let userToken;
         userToken = null;
         if (userName == "user" && password == "pass") {
-          userToken = "abcd";
+          userToken = "code_token";
           try {
             await AsyncStorage.setItem("userToken", userToken);
           } catch (error) {
@@ -54,7 +51,6 @@ const App = () => {
         dispatch({ type: "LOGIN", id: userName, token: userToken });
       },
       signOut: async () => {
-        // setuseToken(null), setIsLoading(false);
         try {
           await AsyncStorage.removeItem("userToken");
         } catch (error) {
@@ -64,7 +60,7 @@ const App = () => {
         dispatch({ type: "LOGOUT" });
       },
       signUp: () => {
-        setuseToken("abcd"), setIsLoading(false);
+        setuseToken("code_token"), setIsLoading(false);
       },
     }),
     []
@@ -90,7 +86,7 @@ const App = () => {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer theme={theme}>
-        {loginState.userToken !== null ? (
+        {user ? (
           <Stack.Navigator
             screenOptions={{
               headerShown: false,

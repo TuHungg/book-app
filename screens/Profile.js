@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { LinearGradient } from "expo-linear-gradient";
 
 import { AuthContext } from "../store/Context";
+import { apiSigOut } from "../firebase/api/apiUser";
 
 const Profile = () => {
   const {
@@ -49,7 +50,7 @@ const Profile = () => {
 
           <TouchableOpacity
             onPress={() => {
-              signOut();
+              apiSigOut();
             }}
             style={{
               borderColor: COLORS.orange,
@@ -62,7 +63,7 @@ const Profile = () => {
                 color: COLORS.orange,
               }}
             >
-              Log out
+              SigOut
             </Text>
           </TouchableOpacity>
         </View>

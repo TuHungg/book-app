@@ -18,6 +18,8 @@ import Feather from "react-native-vector-icons/Feather";
 import { FONTS, COLORS, SIZES, icons } from "../constants";
 
 import { useForm, Controller } from "react-hook-form";
+import { AuthContext } from "../store/Context";
+import { apiSigUp } from "../firebase/api/apiUser";
 
 const SignInScreen = ({ navigation }) => {
   const {
@@ -29,17 +31,27 @@ const SignInScreen = ({ navigation }) => {
     formState: { errors },
   } = useForm();
 
+  const { sigup } = React.useContext(AuthContext);
+
   const [secureTextEntry, setSecureTextEntry] = React.useState({
     secureTextEntry: true,
     confirm_secureTextEntry: true,
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // setSecureTextEntry();
-    // if (data.password !== data.confirmPassword) {
-    //   alert("please input correct password");
-    // }
-    console.log(data);
+    try {
+      if (data.password !== data.confirmPassword) {
+        alert("please input correct password");
+      } else {
+        await apiSigUp(data);
+        // console.log(data);
+        alert("Sigup sucess");
+        reset("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateSecureTextEntry = () => {
@@ -86,7 +98,7 @@ const SignInScreen = ({ navigation }) => {
                   value={value}
                 />
               )}
-              name="name"
+              name="username"
               rules={{ required: true }}
             />
             {/* {data.check_textInputChange ? (
@@ -151,7 +163,7 @@ const SignInScreen = ({ navigation }) => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   placeholder="Confirm Your Password"
-                  secureTextEntry={secureTextEntry.confirm_secureTextEntry ? true : false}
+                  secureTextEntry={secureTextEntry.secureTextEntry ? true : false}
                   style={styles.textInput}
                   autoCapitalize="none"
                   onBlur={onBlur}

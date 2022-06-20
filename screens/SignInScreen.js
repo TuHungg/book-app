@@ -21,6 +21,7 @@ import { AuthContext } from "../store/Context";
 // import Users from "../model/users";
 
 import { useForm, Controller } from "react-hook-form";
+import { apiSigIn } from "../firebase/api/apiUser";
 
 const SignInScreen = ({ navigation }) => {
   const {
@@ -34,8 +35,14 @@ const SignInScreen = ({ navigation }) => {
 
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    // console.log(data);
+
+    try {
+      await apiSigIn();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const { colors } = useTheme();
