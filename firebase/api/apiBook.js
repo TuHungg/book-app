@@ -1,4 +1,4 @@
-import "../cofigFirbase";
+import "../Firebase";
 import {
   addDoc,
   collection,

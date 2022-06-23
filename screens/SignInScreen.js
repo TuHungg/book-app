@@ -14,14 +14,14 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { FONTS, COLORS, SIZES, icons } from "../constants";
-
+import { Entypo } from "@expo/vector-icons";
 import { useTheme } from "react-native-paper";
+import { AntDesign } from "@expo/vector-icons";
 
-import { AuthContext } from "../store/Context";
 // import Users from "../model/users";
 
 import { useForm, Controller } from "react-hook-form";
-import { apiSigIn } from "../firebase/api/apiUser";
+import { apiCurrentUser, apiSigIn } from "../firebase/api/apiUser";
 
 const SignInScreen = ({ navigation }) => {
   const {
@@ -36,10 +36,9 @@ const SignInScreen = ({ navigation }) => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
 
   const onSubmit = async (data) => {
-    // console.log(data);
-
     try {
-      await apiSigIn();
+      await apiSigIn(data);
+      await apiCurrentUser();
     } catch (error) {
       console.log(error);
     }
@@ -91,7 +90,7 @@ const SignInScreen = ({ navigation }) => {
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                placeholder="Your Username"
+                placeholder="Your email"
                 placeholderTextColor="#666666"
                 style={[
                   styles.textInput,
@@ -106,7 +105,7 @@ const SignInScreen = ({ navigation }) => {
                 // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
               />
             )}
-            name="username"
+            name="email"
             rules={{ required: true }}
           />
 
@@ -221,6 +220,40 @@ const SignInScreen = ({ navigation }) => {
               Sign Up
             </Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              marginTop: 50,
+              marginRight: 20,
+              borderColor: "blue",
+              borderWidth: 1,
+            }}
+          >
+            <TouchableOpacity
+              // style={styles.signIn}
+              onPress={
+                () => console.log("btn Facebook")
+                // loginHandle(data.username, data.password);
+                // signIn();
+              }
+            >
+              <Entypo name="facebook" size={24} color="blue" />
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginTop: 50, borderColor: "blue", borderWidth: 1 }}>
+            <TouchableOpacity
+              // style={styles.signIn}
+              onPress={
+                () => console.log("btn Facebook")
+                // loginHandle(data.username, data.password);
+                // signIn();
+              }
+            >
+              <AntDesign name="googleplus" size={24} color="red" />
+            </TouchableOpacity>
+          </View>
         </View>
       </Animatable.View>
     </View>

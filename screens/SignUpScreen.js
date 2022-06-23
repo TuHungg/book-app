@@ -18,7 +18,6 @@ import Feather from "react-native-vector-icons/Feather";
 import { FONTS, COLORS, SIZES, icons } from "../constants";
 
 import { useForm, Controller } from "react-hook-form";
-import { AuthContext } from "../store/Context";
 import { apiSigUp } from "../firebase/api/apiUser";
 
 const SignInScreen = ({ navigation }) => {
@@ -30,8 +29,6 @@ const SignInScreen = ({ navigation }) => {
     reset,
     formState: { errors },
   } = useForm();
-
-  const { sigup } = React.useContext(AuthContext);
 
   const [secureTextEntry, setSecureTextEntry] = React.useState({
     secureTextEntry: true,
