@@ -19,6 +19,8 @@ const RootScreen = () => {
   const { user } = useAuthentication();
   const [loading, setLoading] = React.useState(false);
 
+  // alert(user);
+
   useEffect(() => {
     setTimeout(async () => {
       setLoading(true);

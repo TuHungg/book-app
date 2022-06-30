@@ -32,13 +32,13 @@ const BookDetail = ({ route, navigation }) => {
     setBook(book);
   }, [book]);
 
-  // console.log(book?.author);
+  // console.log(book);
 
   function renderBookInfoSection() {
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground
-          source={book.bookCover}
+          // source={{ uri: book.imageUrl }}
           resizeMode="cover"
           style={{
             position: "absolute",
@@ -106,7 +106,7 @@ const BookDetail = ({ route, navigation }) => {
         {/* Book Cover */}
         <View style={{ flex: 5, paddingTop: SIZES.padding2, alignItems: "center" }}>
           <Image
-            source={book.bookCover}
+            source={{ uri: book.imageUrl }}
             resizeMode="contain"
             style={{
               flex: 1,
@@ -211,10 +211,10 @@ const BookDetail = ({ route, navigation }) => {
             useNativeDriver: false,
           })}
         >
-          <Text style={{ ...FONTS.h2, color: COLORS.white, marginBottom: SIZES.padding }}>
+          <Text style={{ ...FONTS.h2, color: COLORS.lightGray4, marginBottom: SIZES.padding }}>
             Description
           </Text>
-          <Text style={{ ...FONTS.body2, color: COLORS.lightGray }}>{book.description}</Text>
+          <Text style={{ ...FONTS.body2, color: COLORS.lightGray4 }}>{book.description}</Text>
         </ScrollView>
       </View>
     );
@@ -270,7 +270,7 @@ const BookDetail = ({ route, navigation }) => {
   if (book) {
     return (
       <Animatable.View
-        style={{ flex: 1, backgroundColor: COLORS.darkBlue }}
+        style={{ flex: 1, backgroundColor: COLORS.lightOrange }}
         animation="fadeInDown"
         duration={2000}
         delay={1000}

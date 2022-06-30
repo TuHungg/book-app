@@ -26,22 +26,24 @@ const CategoriesSection = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = React.useState(1);
 
   const [dataApp, setDataApp] = React.useState();
-  const [imageApp, setImageApp] = React.useState();
+  // const [imageApp, setImageApp] = React.useState();
 
   React.useEffect(() => {
     // console.log("render ", new Date().toLocaleString());
 
     const db = async () => {
-      const image = await apiGetImage();
       const data = await apiGetBook();
       // console.log(data);
+
       setDataApp(data);
-      setImageApp(image);
     };
+
     db();
   }, []);
 
-  // console.log(imageApp);
+  // dataApp.map((item) => {
+  //   console.log(item.value);
+  // });
 
   // function renderCategoryHeader() {
   //   const renderItem = ({ item }) => {
@@ -94,11 +96,14 @@ const CategoriesSection = ({ navigation }) => {
             }
           >
             {/* Book Cover */}
-            <Image
-              source={images.theTinyDragon}
-              resizeMode="cover"
-              style={{ width: 100, height: 150, borderRadius: 10 }}
-            />
+            {
+              <Image
+                source={{ uri: item.value.imageUrl }}
+                // source={item.value.imageUrl}
+                resizeMode="cover"
+                style={{ width: 100, height: 150, borderRadius: 10 }}
+              />
+            }
 
             <View style={{ flex: 1, marginLeft: SIZES.radius }}>
               {/* Book name and author */}

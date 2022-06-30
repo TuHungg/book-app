@@ -233,8 +233,9 @@ const Profile = () => {
             />
           </View>
         </Animatable.View>
+
         <View style={{ flex: 1, backgroundColor: COLORS.lightOrange }}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               // loginHandle(data.username, data.password);
               signIn();
@@ -249,7 +250,7 @@ const Profile = () => {
                 Sign In
               </Text>
             </LinearGradient>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             onPress={() => SigOut()}
