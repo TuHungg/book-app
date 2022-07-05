@@ -14,36 +14,15 @@ import { COLORS, FONTS, SIZES, icons, images } from "../../constants";
 import { profileData, myBooksData, categoriesData } from "../../constants/data";
 import { Feather } from "@expo/vector-icons";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import { apiGetBook } from "../../firebase/api/apiBook";
-import { apiGetImage } from "./../../firebase/api/apiBook";
+
+import { BookContext } from "../../store/BookContext";
 
 const CategoriesSection = ({ navigation }) => {
   const [categories, setCategories] = React.useState(categoriesData);
   const [selectedCategory, setSelectedCategory] = React.useState(1);
 
-  const [dataApp, setDataApp] = React.useState();
-  // const [imageApp, setImageApp] = React.useState();
-
-  React.useEffect(() => {
-    // console.log("render ", new Date().toLocaleString());
-
-    const db = async () => {
-      const data = await apiGetBook();
-      // console.log(data);
-
-      setDataApp(data);
-    };
-
-    db();
-  }, []);
-
-  // dataApp.map((item) => {
-  //   console.log(item.value);
-  // });
+  const [stateBooks, dispatch] = React.useContext(BookContext);
 
   // function renderCategoryHeader() {
   //   const renderItem = ({ item }) => {
@@ -227,7 +206,7 @@ const CategoriesSection = ({ navigation }) => {
     return (
       <View style={{ flex: 1, marginTop: SIZES.radius, paddingLeft: SIZES.padding }}>
         <FlatList
-          data={dataApp}
+          data={stateBooks}
           renderItem={renderItem}
           keyExtractor={(item) => `${item.id}`}
           showsVerticalScrollIndicator={false}

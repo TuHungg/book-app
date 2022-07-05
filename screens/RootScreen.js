@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import { ActivityIndicator, AppRegistry, Platform, View } from "react-native";
+import { ActivityIndicator, AppRegistry, Platform, View, SafeAreaView } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+// import "react-native-gesture-handler";
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import { BookDetail, Home, Reading, Profile } from "./index";
 import Tabs from "../navigation/tabs";
+import Drawers from "../navigation/drawers";
 import { useFonts } from "expo-font";
-import RootStackScreen from "./RootStackScreen";
+import NavigationAuth from "../navigation/NavigationAuth";
 import { FONTS, COLORS, SIZES, icons } from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthentication } from "../hook/useAuthentication";
@@ -17,9 +19,8 @@ const Stack = createStackNavigator();
 
 const RootScreen = () => {
   const { user } = useAuthentication();
-  const [loading, setLoading] = React.useState(false);
 
-  // alert(user);
+  const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
     setTimeout(async () => {
@@ -45,13 +46,13 @@ const RootScreen = () => {
     );
   } else {
     return (
-      // <AuthContext.Provider value={authContext}>
       <NavigationContainer theme={theme}>
         {user ? (
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
             }}
+            component={Tabs}
             initialRouteName={"Home"}
           >
             <Stack.Screen name="Home" component={Tabs} />
@@ -67,10 +68,9 @@ const RootScreen = () => {
             <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
           </Stack.Navigator>
         ) : (
-          <RootStackScreen />
+          <NavigationAuth />
         )}
       </NavigationContainer>
-      // </AuthContext.Provider>
     );
   }
 };

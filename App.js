@@ -1,14 +1,13 @@
 import React from "react";
 import RootScreen from "./screens/RootScreen";
-import { AuthProvider } from "./store/AuthContext";
+import { BookProvier } from "./store/BookContext";
+import Drawers from "./navigation/drawers";
 
 const App = () => {
   return (
-    <>
-      <AuthProvider>
-        <RootScreen />
-      </AuthProvider>
-    </>
+    <BookProvier>
+      <RootScreen />
+    </BookProvier>
   );
 };
 
